@@ -10,11 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.io.Serializable;
 
-@Embeddable
-@NoArgsConstructor
 @Getter
-@AllArgsConstructor
+@Embeddable
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReservationId implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

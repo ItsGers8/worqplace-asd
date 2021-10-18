@@ -6,11 +6,11 @@ import javax.persistence.Embeddable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Embeddable
 @Getter
+@Embeddable
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Timeslot {
     private LocalTime fromTime;
     private LocalTime toTime;

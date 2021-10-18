@@ -14,8 +14,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Office {
     @EmbeddedId
     private OfficeId id;

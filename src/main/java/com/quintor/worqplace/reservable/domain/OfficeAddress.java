@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
-@Embeddable
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
+@Embeddable
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class OfficeAddress {
     private String street;
     private String number;

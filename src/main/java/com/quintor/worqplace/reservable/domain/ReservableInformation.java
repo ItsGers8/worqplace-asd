@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
-@Embeddable
 @Getter
+@Embeddable
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class ReservableInformation {
     private String name;
     private String description;

@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Reservation {
     @EmbeddedId
     private ReservationId id;
