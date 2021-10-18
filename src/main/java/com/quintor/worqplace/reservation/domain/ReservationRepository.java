@@ -1,6 +1,5 @@
-package com.quintor.worqplace.data;
+package com.quintor.worqplace.reservation.domain;
 
-import com.quintor.worqplace.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
