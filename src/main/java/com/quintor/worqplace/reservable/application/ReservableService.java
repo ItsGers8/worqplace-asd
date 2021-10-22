@@ -27,19 +27,7 @@ public class ReservableService {
 
     public ReservationDTO reserve(Long id, Timeslot timeslot, boolean recurring) throws TimeslotOverlapException {
         Reservable reservable = this.reservableRepository.getById(id);
-        for (int i = 0; i < reservable.getReservations().size(); i++) {
-            Reservation currentReservation = reservable.getReservations().get(i);
-            Timeslot existing = currentReservation.getTimeslot();
-            if (!timeslot.getDate().equals(existing.getDate())
-                    || (currentReservation.isRecurring() && timeslot.getDate().getDayOfWeek()
-                    != existing.getDate().getDayOfWeek())) continue;
-            if (timeslot.getFromTime().isAfter(existing.getToTime())
-                    && timeslot.getToTime().isAfter(existing.getToTime())) continue;
-            if (timeslot.getFromTime().isBefore(existing.getFromTime())
-                    && timeslot.getToTime().isBefore(existing.getFromTime())) continue;
-            throw new TimeslotOverlapException("There is already a timeslot");
-        }
-        Reservation reservation = new Reservation(reservable, timeslot, recurring);
+        Reservation reservation = reservable.reserve(timeslot, recurring);
 
         reservable.addReservation(reservation);
 

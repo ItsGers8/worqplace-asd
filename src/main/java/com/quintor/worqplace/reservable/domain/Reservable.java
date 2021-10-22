@@ -1,6 +1,8 @@
 package com.quintor.worqplace.reservable.domain;
 
+import com.quintor.worqplace.reservable.application.exceptions.TimeslotOverlapException;
 import com.quintor.worqplace.reservation.domain.Reservation;
+import com.quintor.worqplace.reservation.domain.Timeslot;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,13 +32,23 @@ public abstract class Reservable {
         this.info = info;
     }
 
-    public Reservable(Long id, String floor, ReservableInformation info) {
-        this.id = id;
-        this.floor = floor;
-        this.info = info;
-    }
-
     public void addReservation(Reservation reservation) {
         this.reservations.add(reservation);
+    }
+    public abstract Reservation reserve(Timeslot timeslot, boolean recurring) throws TimeslotOverlapException;
+    public boolean isNotAvailableDuringTimeslot(Timeslot timeslot) {
+        for (int i = 0; i < this.getReservations().size(); i++) {
+            Reservation currentReservation = this.getReservations().get(i);
+            Timeslot existing = currentReservation.getTimeslot();
+            if (!timeslot.getDate().equals(existing.getDate())
+                    || (currentReservation.isRecurring() && timeslot.getDate().getDayOfWeek()
+                    != existing.getDate().getDayOfWeek())) continue;
+            if (timeslot.getFromTime().isAfter(existing.getToTime())
+                    && timeslot.getToTime().isAfter(existing.getToTime())) continue;
+            if (timeslot.getFromTime().isBefore(existing.getFromTime())
+                    && timeslot.getToTime().isBefore(existing.getFromTime())) continue;
+            return true;
+        }
+        return false;
     }
 }
