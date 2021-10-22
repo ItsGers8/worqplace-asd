@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -15,4 +17,21 @@ import javax.persistence.Entity;
 public class Workplace extends Reservable {
     private String chairDescription;
     private DeskType deskType;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    public Workplace(String floor, String reservableName, String reservableDescription, String chairDescription,
+                     DeskType deskType) {
+        super(floor, new ReservableInformation(reservableName, reservableDescription));
+        this.chairDescription = chairDescription;
+        this.deskType = deskType;
+    }
+
+    public Workplace(Long id, String floor, String reservableName, String reservableDescription, String chairDescription,
+                     DeskType deskType) {
+        super(id, floor, new ReservableInformation(reservableName, reservableDescription));
+        this.chairDescription = chairDescription;
+        this.deskType = deskType;
+    }
 }
