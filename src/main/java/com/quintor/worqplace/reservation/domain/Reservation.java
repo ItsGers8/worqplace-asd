@@ -29,13 +29,18 @@ public class Reservation {
         this.timeslot = timeslot;
     }
 
-    public void updateTimeslot(LocalDate newDate, LocalTime newFrom, LocalTime newTo){
+    public Timeslot updateTimeslot(LocalDate newDate, LocalTime newFrom, LocalTime newTo){
         Timeslot newTimeslot = new Timeslot(newDate, newFrom, newTo);
         setTimeslot(newTimeslot);
+        return newTimeslot;
     }
 
     public void setTimeslot(Timeslot timeslot) {
         this.timeslot = timeslot;
+    }
+
+    public ReservationId getId() {
+        return id;
     }
 
     @Override
