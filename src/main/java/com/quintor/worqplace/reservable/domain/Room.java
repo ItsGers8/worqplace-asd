@@ -1,5 +1,8 @@
 package com.quintor.worqplace.reservable.domain;
 
+import com.quintor.worqplace.reservable.application.exceptions.TimeslotOverlapException;
+import com.quintor.worqplace.reservation.domain.Reservation;
+import com.quintor.worqplace.reservation.domain.Timeslot;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +32,17 @@ public class Room extends Reservable {
 
     public void addWorkplace(Workplace workplace) {
         this.workplaces.add(workplace);
+    }
+
+    @Override
+    public Reservation reserve(Timeslot timeslot, boolean recurring) throws TimeslotOverlapException {
+        if (this.isNotAvailableDuringTimeslot(timeslot) ||
+                this.workplaces.stream().anyMatch(workplace -> workplace.isNotAvailableDuringTimeslot(timeslot))) {
+            throw new TimeslotOverlapException("This room, or one of the workplaces in it " +
+                    "is already reserved during that timeslot");
+        }
+        Reservation reservation = new Reservation(this, timeslot, recurring);
+        addReservation(reservation);
+        return reservation;
     }
 }
