@@ -27,4 +27,11 @@ public class Workplace extends Reservable {
         this.chairDescription = chairDescription;
         this.deskType = deskType;
     }
+
+    public Workplace(Long id, String floor, String reservableName, String reservableDescription, String chairDescription,
+                     DeskType deskType) {
+        super(id, floor, new ReservableInformation(reservableName, reservableDescription));
+        this.chairDescription = chairDescription;
+        this.deskType = deskType;
+    }
 }

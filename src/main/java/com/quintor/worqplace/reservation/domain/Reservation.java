@@ -1,6 +1,7 @@
 package com.quintor.worqplace.reservation.domain;
 
 import com.quintor.worqplace.reservable.domain.Reservable;
+import com.quintor.worqplace.reservation.domain.exceptions.InvalidTimeslotException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,10 +9,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
+@Data
 @AllArgsConstructor
 public class Reservation {
-    @EmbeddedId
-    private ReservationId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private boolean recurring;
     @Embedded
     private Timeslot timeslot;
@@ -29,40 +32,8 @@ public class Reservation {
 
     }
 
-    public void updateTimeslot(LocalDate newDate, LocalTime newFrom, LocalTime newTo){
+    public void updateTimeslot(LocalDate newDate, LocalTime newFrom, LocalTime newTo) throws InvalidTimeslotException {
         Timeslot newTimeslot = new Timeslot(newDate, newFrom, newTo);
-        setTimeslot(newTimeslot);
-    }
-
-    public void setTimeslot(Timeslot timeslot) {
-        this.timeslot = timeslot;
-    }
-
-    public ReservationId getId() {
-        return id;
-    }
-
-    public void setId(ReservationId id) {
-        this.id = id;
-    }
-
-    public boolean isRecurring() {
-        return recurring;
-    }
-
-    public void setRecurring(boolean recurring) {
-        this.recurring = recurring;
-    }
-
-    public Timeslot getTimeslot() {
-        return timeslot;
-    }
-
-    public Reservable getReservable() {
-        return reservable;
-    }
-
-    public void setReservable(Reservable reservable) {
-        this.reservable = reservable;
+        this.setTimeslot(newTimeslot);
     }
 }

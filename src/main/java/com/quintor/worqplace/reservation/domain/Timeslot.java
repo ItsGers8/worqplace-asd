@@ -1,5 +1,6 @@
 package com.quintor.worqplace.reservation.domain;
 
+import com.quintor.worqplace.reservation.domain.exceptions.InvalidTimeslotException;
 import lombok.*;
 
 import javax.persistence.Embeddable;
@@ -16,7 +17,8 @@ public class Timeslot {
     private LocalTime toTime;
     private LocalDate date;
 
-    public Timeslot(LocalDate date, LocalTime from, LocalTime to) {
+    public Timeslot(LocalDate date, LocalTime from, LocalTime to) throws InvalidTimeslotException {
+        if (from.isAfter(to)) throw new InvalidTimeslotException("Time does not move backwards");
         this.date = date;
         this.fromTime = from;
         this.toTime = to;
