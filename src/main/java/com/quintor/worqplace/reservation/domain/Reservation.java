@@ -28,12 +28,13 @@ public class Reservation {
         this.recurring = recurring;
     }
 
-    public Reservation() {
-
+    public Reservation(Timeslot timeslot) {
+        this.timeslot = timeslot;
     }
 
-    public void updateTimeslot(LocalDate newDate, LocalTime newFrom, LocalTime newTo) throws InvalidTimeslotException {
+    public Timeslot updateTimeslot(LocalDate newDate, LocalTime newFrom, LocalTime newTo) throws InvalidTimeslotException {
         Timeslot newTimeslot = new Timeslot(newDate, newFrom, newTo);
-        this.setTimeslot(newTimeslot);
+        setTimeslot(newTimeslot);
+        return newTimeslot;
     }
 }
